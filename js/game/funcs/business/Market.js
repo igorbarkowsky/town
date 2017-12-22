@@ -22,7 +22,7 @@ Market = function (id) {
 };
 
 Stats = function (id) {
-    this.bussiness_id = id;
+    this.business_id = id;
     this.budget = Array();
     this.profit = Array();
     this.loss = Array();
