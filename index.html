@@ -15,6 +15,14 @@
         }
     </style>
 </head>
-<body>
+<body onload="draw()">
+<script language="JavaScript" src="./js/game/funcs/Economy.js"></script>
+<script language="JavaScript" src="./js/game/funcs/Havings.js"></script>
+<script language="JavaScript" src="./js/game/funcs/User.js"></script>
+<script language="JavaScript">
+    var PlayerProfile = new Profile("Alexander", "Ryabokon", "1998-07-20", 1);
+    var Player = new User(1, "alex1rap", PlayerProfile, "127.0.0.1", Date.now());
+    console.log(Player);
+</script>
 </body>
 </html>
