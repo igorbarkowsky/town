@@ -9,6 +9,7 @@ Market = function (id) {
     this.budget = 0;
     this.profit = 0;
     this.loss = 0;
+    this.tax = 0;
     this.sellThing = function (id) {
         var thing = this.things[id];
         var tax = thing.price * 0.2;
@@ -18,6 +19,42 @@ Market = function (id) {
             profit: profit,
             tax: tax
         };
+    };
+    this.changeBudget = function (amount) {
+        var tax = amount > 0 ? amount * 0.2 : 0;
+        var profit = amount - tax;
+        this.budget += profit;
+        this.profit += profit > 0 ? profit : 0;
+        this.loss += profit < 0 ? -profit : 0;
+        this.tax += tax;
+        return {
+            budget: this.budget,
+            profit: this.profit,
+            loss: this.loss,
+            tax: this.tax
+        };
+    };
+    this.addEmployee = function (User, Profession, pay) {
+        this.employees[this.employees.length] = {
+            user: User,
+            profession_id: Profession.id,
+            pay: pay,
+            time: Date.now(),
+            last_paid: Date.now()
+        };
+    };
+    this.pay = function (employee_id) {
+        var employee = this.employees[employee_id];
+        var last_paid = employee.last_paid;
+        var new_last_paid = Date.now();
+        var pay = Math.round((new_last_paid - employee.last_paid) / 1000 * (employee.pay / 60));
+        this.employees[employee_id].last_paid = new_last_paid;
+        employee.user.economy.money += pay * 0.8;
+        return this.changeBudget(pay);
+    };
+    this.unEmployeed = function (id) {
+        this.pay(id);
+        this.employees.splice(id, 1);
     }
 };
 
